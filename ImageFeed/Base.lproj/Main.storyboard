@@ -87,7 +87,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="wAU-ve-0t9" id="yCh-se-t0W"/>
                                             <outlet property="dateLable" destination="kLW-Sl-GpZ" id="PGS-Mv-pbw"/>
-                                            <outlet property="gradientView" destination="nOa-Jc-hML" id="9xw-v8-U46"/>
+                                            <outlet property="gradientView" destination="nOa-Jc-hML" id="MSx-vN-DNf"/>
                                             <outlet property="likeButton" destination="bZC-PW-H3r" id="Lnm-yY-N4A"/>
                                         </connections>
                                     </tableViewCell>

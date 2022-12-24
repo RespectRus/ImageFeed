@@ -41,15 +41,13 @@ extension ImagesListViewController {
         let startColor = ypBlack?.withAlphaComponent(0).cgColor
         let endColor = ypBlack?.withAlphaComponent(0.2).cgColor
         gradient.colors = [startColor as Any, endColor as Any]
-
         
-        gradient.frame = cell.gradientView.bounds
-      
-        cell.gradientView.layer.cornerRadius = 16
-        cell.gradientView.layer.masksToBounds = true
         gradient.locations = [0, 1]
+        gradient.frame = cell.gradientView.bounds
+        
+        cell.gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         cell.gradientView.layer.insertSublayer(gradient, at: 0)
-
+        
     }
 }
 
