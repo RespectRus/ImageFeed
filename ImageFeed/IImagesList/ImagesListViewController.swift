@@ -1,55 +1,67 @@
 import UIKit
 
 class ImagesListViewController: UIViewController {
+    
     @IBOutlet private var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
+    
+    private lazy var dataFormatter: DateFormatter = {
+          let formatter = DateFormatter()
+          formatter.dateStyle = .long
+          formatter.timeStyle = .none
+          return formatter
+      }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
-    
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
 }
-//MARK: - Extension
+//MARK: - Сonfiguration
 
 extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
         }
+        
         cell.cellImage.image = image
         cell.cellImage.layer.cornerRadius = 16
         cell.cellImage.layer.masksToBounds = true
-        cell.dateLable.text = dateFormatter.string(from: Date())
+        cell.dataLable.text = dataFormatter.string(from: Date())
         
         let isLiked = indexPath.row % 2 == 0
         let likeImage = isLiked ? UIImage(named: "active_like_button") : UIImage(named: "no_active_like_button")
+        
         cell.likeButton.setImage(likeImage, for: .normal)
-        
-        let gradient = CAGradientLayer()
-        
-        let ypBlack =  UIColor(named: "YP Black (iOS)")
-        
-        let startColor = ypBlack?.withAlphaComponent(0).cgColor
-        let endColor = ypBlack?.withAlphaComponent(0.2).cgColor
-        gradient.colors = [startColor as Any, endColor as Any]
-        
-        gradient.locations = [0, 1]
-        gradient.frame = cell.gradientView.bounds
-        
-        cell.gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        cell.gradientView.layer.insertSublayer(gradient, at: 0)
-        
     }
 }
+
+extension ImagesListViewController {
+    func configGradient(for cell: ImagesListCell, with indexPath: IndexPath) {
+        let gradient = CAGradientLayer()
+        
+        while cell.gradientView.layer.shouldRasterize == false {
+            
+            let ypBlack =  UIColor(named: "YP Black (iOS)")
+            let startColor = ypBlack?.withAlphaComponent(0).cgColor
+            let endColor = ypBlack?.withAlphaComponent(0.2).cgColor
+            
+            gradient.colors = [startColor as Any, endColor as Any]
+            gradient.locations = [0, 1]
+            gradient.frame = cell.gradientView.bounds
+            
+            
+            cell.gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            cell.gradientView.layer.addSublayer(gradient)
+            cell.gradientView.layer.shouldRasterize = true
+        }
+    }
+}
+
+//MARK: - TableView
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
@@ -80,7 +92,7 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         
         configCell(for: imageListCell, with: indexPath)
+        configGradient(for: imageListCell, with: indexPath)
         return imageListCell
     }
 }
-

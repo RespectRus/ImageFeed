@@ -43,9 +43,6 @@
                                                         <constraint firstAttribute="height" constant="30" id="ExY-IM-cs5"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="0"/>
-                                                        </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -58,7 +55,7 @@
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="active_like_button"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-Sl-GpZ" userLabel="DateLable">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-Sl-GpZ" userLabel="DataLable">
                                                     <rect key="frame" x="24.000000000000007" y="227.33333333333334" width="101.66666666666669" height="15.666666666666657"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" name="YP White (iOS)"/>
@@ -86,7 +83,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cellImage" destination="wAU-ve-0t9" id="yCh-se-t0W"/>
-                                            <outlet property="dateLable" destination="kLW-Sl-GpZ" id="PGS-Mv-pbw"/>
+                                            <outlet property="dataLable" destination="kLW-Sl-GpZ" id="WaU-h9-AAv"/>
                                             <outlet property="gradientView" destination="nOa-Jc-hML" id="MSx-vN-DNf"/>
                                             <outlet property="likeButton" destination="bZC-PW-H3r" id="Lnm-yY-N4A"/>
                                         </connections>
