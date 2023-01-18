@@ -6,7 +6,7 @@ final class ImagesListViewController: UIViewController {
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
-
+    
     private lazy var dataFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -48,6 +48,8 @@ extension ImagesListViewController {
         let likeImage = isLiked ? UIImage(named: "active_like_button") : UIImage(named: "no_active_like_button")
         
         cell.likeButton.setImage(likeImage, for: .normal)
+        
+        //MARK: - Gradient
         
         let gradient = CAGradientLayer()
         

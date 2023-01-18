@@ -9,8 +9,6 @@ class SingleImageViewController: UIViewController {
         }
     }
     
-    
-    
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -33,7 +31,6 @@ class SingleImageViewController: UIViewController {
     @IBAction func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
-    
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale
