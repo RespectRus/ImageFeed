@@ -5,10 +5,9 @@ class ProfileViewController: UIViewController {
     private var nameLabel: UILabel?
     private var loginNameLabel: UILabel?
     private var discriptionLabel: UILabel?
-    
-    
+
     override func viewDidLoad() {
-       super.viewDidLoad()
+        super.viewDidLoad()
         settingsView()
     }
     
@@ -34,7 +33,7 @@ class ProfileViewController: UIViewController {
         self.nameLabel = nameLabel
         
         let loginNameLabel = UILabel()
-        loginNameLabel.textColor = UIColor(named: "YP White (iOS)")
+        loginNameLabel.textColor = UIColor(named: "YP Gray (iOS)")
         loginNameLabel.text = "@ekaterina_nov"
         loginNameLabel.font = loginNameLabel.font.withSize(13)
         loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +80,6 @@ class ProfileViewController: UIViewController {
     }
     
     @objc
-    
     private func didTapButton() {
         nameLabel?.removeFromSuperview()
         nameLabel = nil

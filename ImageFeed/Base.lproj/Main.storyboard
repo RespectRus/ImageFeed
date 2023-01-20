@@ -76,10 +76,16 @@
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="active_like_button"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-Sl-GpZ" userLabel="DataLable">
-                                                    <rect key="frame" x="24.000000000000007" y="227.33333333333334" width="101.66666666666669" height="15.666666666666657"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" name="YP White (iOS)"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLW-Sl-GpZ" userLabel="DataLable">
+                                                    <rect key="frame" x="24.000000000000007" y="227.33333333333334" width="96.666666666666686" height="15.666666666666657"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="27 августа 2022">
+                                                            <attributes>
+                                                                <color key="NSColor" name="YP White (iOS)"/>
+                                                                <font key="NSFont" size="13" name="SFPro-Regular"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
