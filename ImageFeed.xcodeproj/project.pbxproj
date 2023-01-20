@@ -73,7 +73,6 @@
 			children = (
 				30EBFA8329506C7700563AD4 /* Assets.xcassets */,
 				30EBFA8529506C7700563AD4 /* LaunchScreen.storyboard */,
-				30EBFA8829506C7700563AD4 /* Info.plist */,
 			);
 			path = Resurces;
 			sourceTree = "<group>";
@@ -102,6 +101,7 @@
 				30BB5BDC297AAFA5003BF3B3 /* Resurces */,
 				302D3629296EE7B7003A15A3 /* SingleImage */,
 				30EBFA8029506C7300563AD4 /* Main.storyboard */,
+				30EBFA8829506C7700563AD4 /* Info.plist */,
 				30EBFA7A29506C7300563AD4 /* AppDelegate.swift */,
 				30EBFA7C29506C7300563AD4 /* SceneDelegate.swift */,
 			);
