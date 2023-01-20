@@ -1,22 +1,34 @@
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
+    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     private lazy var dataFormatter: DateFormatter = {
-          let formatter = DateFormatter()
-          formatter.dateStyle = .long
-          formatter.timeStyle = .none
-          return formatter
-      }()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ShowSingleImageSegueIdentifier {
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let imageName = photosName[indexPath.row]
+            let image = UIImage(named: "\(imageName)_full_size") ?? UIImage(named: imageName)
+            viewController.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
     }
 }
 //MARK: - Сonfiguration
@@ -36,11 +48,9 @@ extension ImagesListViewController {
         let likeImage = isLiked ? UIImage(named: "active_like_button") : UIImage(named: "no_active_like_button")
         
         cell.likeButton.setImage(likeImage, for: .normal)
-    }
-}
-
-extension ImagesListViewController {
-    func configGradient(for cell: ImagesListCell, with indexPath: IndexPath) {
+        
+        //MARK: - Gradient
+        
         let gradient = CAGradientLayer()
         
         while cell.gradientView.layer.shouldRasterize == false {
@@ -53,7 +63,6 @@ extension ImagesListViewController {
             gradient.locations = [0, 1]
             gradient.frame = cell.gradientView.bounds
             
-            
             cell.gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
             cell.gradientView.layer.addSublayer(gradient)
             cell.gradientView.layer.shouldRasterize = true
@@ -64,7 +73,9 @@ extension ImagesListViewController {
 //MARK: - TableView
 
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
@@ -92,7 +103,7 @@ extension ImagesListViewController: UITableViewDataSource {
         }
         
         configCell(for: imageListCell, with: indexPath)
-        configGradient(for: imageListCell, with: indexPath)
+        
         return imageListCell
     }
 }
