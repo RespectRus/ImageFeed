@@ -55,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				302D3626296EE4EB003A15A3 /* SingleImageViewController.swift */,
-				30EBFA8029506C7300563AD4 /* Main.storyboard */,
 			);
 			path = SingleImage;
 			sourceTree = "<group>";
@@ -104,6 +103,7 @@
 				302D3629296EE7B7003A15A3 /* SingleImage */,
 				30EBFA7A29506C7300563AD4 /* AppDelegate.swift */,
 				30EBFA7C29506C7300563AD4 /* SceneDelegate.swift */,
+				30EBFA8029506C7300563AD4 /* Main.storyboard */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
