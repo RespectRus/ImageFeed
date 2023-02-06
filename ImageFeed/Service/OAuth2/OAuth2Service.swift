@@ -1,68 +1,48 @@
 import Foundation
 
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-}
-
 final class OAuthService {
     
     static let shared = OAuthService()
-    
-    private (set) var authToken: String? {
-        get {
-            return OAuth2TokenStorage().token
-        }
-        set {
-            OAuth2TokenStorage().token = newValue
-        }
+    private enum NetvorkError: Error {
+        case codeError
     }
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let request = authTokenRequest(code: code)
-        let task = object(for: request) { [weak self] result in
-            guard let self = self else {return}
-            switch result {
-            case .success(let body):
-                let authToken = body.accessToken
-                self.authToken = authToken
-                completion(.success(authToken))
-            case .failure(let error):
+        var urlComponents = URLComponents(string: "https://unsplash.com/oauth/token")!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: Constants.accessKey),
+            URLQueryItem(name: "client_sekret", value: Constants.secretKey),
+            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "code", value: code),
+            URLQueryItem(name: "grant_type", value: "authorization_code")
+        ]
+        let url = urlComponents.url!
+        let request = URLRequest(url: url)
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
                 completion(.failure(error))
+                return
+            }
+            
+            if let response = response as? HTTPURLResponse,
+               response.statusCode < 200 || response.statusCode >= 300 {
+                completion(.failure(NetvorkError.codeError))
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let decodedData = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
+                    completion(.success(decodedData.accessToken))
+                } catch let error {
+                    completion(.failure(error))
+                }
+            } else {
+                return
             }
         }
         task.resume()
     }
-    
-    func authTokenRequest(code: String) -> URLRequest {
-        URLRequest.makeHTTPRequest(
-            path: "/oauth/token"
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
-            + "&&code=\(code)"
-            + "&&grant_type=authorization_code",
-            httpMetod: "POST",
-            baseURL: URL(string: "https://unsplash.com")!)
-    }
 }
 
-extension OAuthService {
-    private func object(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        return URLSession.shared.data(for: request) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let object = try decoder.decode(OAuthTokenResponseBody.self, from: data)
-                    completion(.success(object))
-                } catch {
-                    completion(.failure(error))
-                }
-            case.failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-}

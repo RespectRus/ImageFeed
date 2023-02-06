@@ -1,7 +1,8 @@
 import UIKit
 
 final class OAuth2TokenStorage {
-  private var userDefaults = UserDefaults.standard
+    private var userDefaults = UserDefaults.standard
+    
     var token: String? {
         get {
             return userDefaults.string(forKey: "token")

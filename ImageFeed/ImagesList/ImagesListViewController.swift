@@ -31,6 +31,7 @@ final class ImagesListViewController: UIViewController {
         }
     }
 }
+
 //MARK: - Сonfiguration
 
 extension ImagesListViewController {
