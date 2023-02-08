@@ -5,7 +5,7 @@ class ProfileViewController: UIViewController {
     private var nameLabel: UILabel?
     private var loginNameLabel: UILabel?
     private var discriptionLabel: UILabel?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         settingsView()
@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(imageView)
         
         //MARK: - Labels
+        
         let nameLabel = UILabel()
         nameLabel.textColor = UIColor(named: "YP White (iOS)")
         nameLabel.text = "Екатерина Новикова"
