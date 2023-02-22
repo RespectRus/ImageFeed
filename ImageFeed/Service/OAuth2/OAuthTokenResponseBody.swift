@@ -6,14 +6,12 @@ struct OAuthTokenResponseBody: Decodable {
     let scope: String
     let createdAt: Int
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
         case tokenType = "token_type"
-        case scope
+        case scope = "scope"
         case createdAt = "created_at"
     }
 }
 
-struct User: Encodable {
-    let userName: String
-}
+

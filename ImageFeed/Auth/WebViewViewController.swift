@@ -1,36 +1,35 @@
 import UIKit
 import WebKit
 
-fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
 }
 
 final class WebViewViewController: UIViewController {
+    
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
     
     weak var delegate: WebViewViewControllerDelegate?
+    
+    private struct WebConstants {
+        static let authorizeURL = "https://unsplash.com/oauth/authorize"
+        static let code = "code"
+        static let authorizePath = "/oauth/authorize/native"
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         webView.navigationDelegate = self
         
-        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-        let url = urlComponents.url!
         
-        let request = URLRequest(url: url)
-        webView.load(request)
-        
+        if let request = authorizeRequest() {
+            webView.load(request)
+        }
         updateProgress()
     }
     
@@ -69,30 +68,43 @@ final class WebViewViewController: UIViewController {
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
-    ) {
-        if let code = code(from: navigationAction) {
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let code = fetchCOde(for: navigationAction.request.url) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }
     }
-    
-    private func code(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "/oauth/authorize/native",
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: { $0.name == "code" })
-        {
-            return codeItem.value
-        } else {
+}
+
+    extension WebViewViewController {
+        func authorizeRequest() -> URLRequest? {
+            var urlComponents = URLComponents(string: WebConstants.authorizeURL)
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "client_id", value: Constants.accessKey),
+                URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+                URLQueryItem(name: "response_type", value: WebConstants.code),
+                URLQueryItem(name: "scope", value: Constants.accessScope)
+            ]
+            if let url = urlComponents?.url {
+                return URLRequest(url: url)
+            }
+            return nil
+        }
+        
+        func fetchCOde(for url: URL?) -> String? {
+            if let url = url,
+               let urlComponents = URLComponents(string: url.absoluteString),
+               urlComponents.path == WebConstants.authorizePath,
+               let codeItem = urlComponents.queryItems?.first(where: { $0.name == WebConstants.code}) {
+                return codeItem.value
+            }
             return nil
         }
     }
-}
+    
+    
+    
