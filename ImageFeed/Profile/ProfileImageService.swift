@@ -12,7 +12,7 @@ final class ProfileImageService {
     private init() {}
     
     static let shared = ProfileImageService()
-    static let didChangeNotification = NSNotification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let DidChangeNotification = NSNotification.Name(rawValue: "ProfileImageProviderDidChange")
     
     let queue = DispatchQueue(label: "profileImage.service.queue", qos: .unspecified)
     
@@ -33,10 +33,11 @@ final class ProfileImageService {
             case .success(let decoderObjact):
                 if let image = decoderObjact.profileImage?.image {
                     self.avatarURL = image
-                    NotificationCenter.default.post(
-                        name: ProfileImageService.didChangeNotification,
-                        object: self,
-                        userInfo: ["URL": image])
+                    NotificationCenter.default
+                        .post(
+                            name: ProfileImageService.DidChangeNotification,
+                            object: self,
+                            userInfo: ["URL": image])
                 }
                 complection(.success(()))
             case .failure(let error):

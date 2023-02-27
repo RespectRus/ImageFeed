@@ -22,7 +22,7 @@ final class ProfileViewController: UIViewController {
         
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ProfileImageService.didChangeNotification,
+                forName: ProfileImageService.DidChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in

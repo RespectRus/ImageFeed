@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		302182BA29AC987E0024E8B8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302182B929AC987E0024E8B8 /* TabBarController.swift */; };
 		3024E002297E9A830016082B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E001297E9A830016082B /* Constants.swift */; };
 		302D3627296EE4EB003A15A3 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302D3626296EE4EB003A15A3 /* SingleImageViewController.swift */; };
 		3060753A2951D017008E36D9 /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306075392951D017008E36D9 /* ImageListCell.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		302182B929AC987E0024E8B8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		3024E001297E9A830016082B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		302D3626296EE4EB003A15A3 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		306075392951D017008E36D9 /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
@@ -129,8 +131,8 @@
 		3098C45329A4E203005BB38B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3098C45429A4E232005BB38B /* AlertModel.swift */,
 				3098C45629A4E34A005BB38B /* Profile.swift */,
+				3098C45429A4E232005BB38B /* AlertModel.swift */,
 				3098C45829A4E669005BB38B /* UserModel.swift */,
 			);
 			path = Model;
@@ -198,9 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				30EBFA7929506C7300563AD4 /* ImageFeed */,
-				30EBFA8029506C7300563AD4 /* Main.storyboard */,
-				30EBFA7A29506C7300563AD4 /* AppDelegate.swift */,
-				30EBFA7C29506C7300563AD4 /* SceneDelegate.swift */,
 				30EBFA7829506C7300563AD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -216,6 +215,7 @@
 		30EBFA7929506C7300563AD4 /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				302182B929AC987E0024E8B8 /* TabBarController.swift */,
 				3098C45229A4E191005BB38B /* AlertViewController */,
 				3098C45329A4E203005BB38B /* Model */,
 				30B8D12B29827B4900F9A637 /* Auth */,
@@ -223,9 +223,12 @@
 				3092426C298D11BA00ABB680 /* Helpers */,
 				3098C46129A4ECBA005BB38B /* Profile */,
 				30BB5BDC297AAFA5003BF3B3 /* Resources */,
-				3092426B298D0A7600ABB680 /* SplashViewController */,
 				30B8D133298BF58200F9A637 /* Service */,
 				302D3629296EE7B7003A15A3 /* SingleImage */,
+				3092426B298D0A7600ABB680 /* SplashViewController */,
+				30EBFA8029506C7300563AD4 /* Main.storyboard */,
+				30EBFA7C29506C7300563AD4 /* SceneDelegate.swift */,
+				30EBFA7A29506C7300563AD4 /* AppDelegate.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				3098C46529A4ED00005BB38B /* ProfileService.swift in Sources */,
 				3098C46329A4ECEB005BB38B /* ProfileViewController.swift in Sources */,
 				302D3627296EE4EB003A15A3 /* SingleImageViewController.swift in Sources */,
+				302182BA29AC987E0024E8B8 /* TabBarController.swift in Sources */,
 				3098C45929A4E669005BB38B /* UserModel.swift in Sources */,
 				30924270298D191B00ABB680 /* OAuthTokenResponseBody.swift in Sources */,
 				30B8D135298BF64700F9A637 /* OAuth2Service.swift in Sources */,
