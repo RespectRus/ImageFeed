@@ -29,9 +29,9 @@ struct Profile: Decodable {
     var login: String {"@\(username)"}
 
     enum CodingKeys: String, CodingKey {
-        case username = "username"
-        case name = "name"
-        case bio = "bio"
+        case username
+        case name
+        case bio
     }
 
     init(from decoder: Decoder) throws {
