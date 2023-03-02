@@ -83,7 +83,7 @@ final class ImageListService {
         
         let photo = Photo(id: result.id,
                           size: imageSize,
-                          createdAT: createdDate,
+                          createdAt: createdDate,
                           welcomeDescription: result.description,
                           thumbImageURL: result.urls.thumb,
                           largeImageURL: result.urls.full,
@@ -136,7 +136,7 @@ extension ImageListService {
             let photo = self.photos[index]
             let newPhoto = Photo(id: photo.id,
                                  size: photo.size,
-                                 createdAt:,
+                                 createdAt: photo.createdAt,
                                  welcomeDescription: photo.welcomeDescription,
                                  thumbImageURL: photo.thumbImageURL,
                                  largeImageURL: photo.largeImageURL,

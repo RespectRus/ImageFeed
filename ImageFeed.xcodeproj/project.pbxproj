@@ -12,6 +12,7 @@
 		302182BE29ACDC420024E8B8 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302182BD29ACDC420024E8B8 /* Photo.swift */; };
 		302182C029ACDF3E0024E8B8 /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302182BF29ACDF3E0024E8B8 /* PhotoResult.swift */; };
 		302182C429ACECF80024E8B8 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302182C329ACECF80024E8B8 /* URLRequest.swift */; };
+		302182C829B09A2C0024E8B8 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302182C729B09A2C0024E8B8 /* AlertViewController.swift */; };
 		3024E002297E9A830016082B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E001297E9A830016082B /* Constants.swift */; };
 		302D3627296EE4EB003A15A3 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302D3626296EE4EB003A15A3 /* SingleImageViewController.swift */; };
 		3060753A2951D017008E36D9 /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306075392951D017008E36D9 /* ImageListCell.swift */; };
@@ -27,8 +28,6 @@
 		3098C46529A4ED00005BB38B /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3098C46429A4ED00005BB38B /* ProfileService.swift */; };
 		3098C46729A4ED19005BB38B /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3098C46629A4ED19005BB38B /* ProfileImageService.swift */; };
 		3098C46A29A4FD25005BB38B /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 3098C46929A4FD25005BB38B /* SwiftKeychainWrapper */; };
-		3098C46E29A4FF06005BB38B /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3098C46C29A4FF06005BB38B /* YS Display-Bold.ttf */; };
-		3098C46F29A4FF06005BB38B /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3098C46D29A4FF06005BB38B /* YS Display-Medium.ttf */; };
 		3098C47229A501AF005BB38B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3098C47129A501AF005BB38B /* Kingfisher */; };
 		30B8D12D29827BA800F9A637 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B8D12C29827BA800F9A637 /* AuthViewController.swift */; };
 		30B8D12F29827D5200F9A637 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B8D12E29827D5200F9A637 /* WebViewViewController.swift */; };
@@ -48,6 +47,9 @@
 		302182BD29ACDC420024E8B8 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		302182BF29ACDF3E0024E8B8 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
 		302182C329ACECF80024E8B8 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		302182C529B0976A0024E8B8 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
+		302182C629B0976A0024E8B8 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		302182C729B09A2C0024E8B8 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		3024E001297E9A830016082B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		302D3626296EE4EB003A15A3 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		306075392951D017008E36D9 /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
@@ -61,8 +63,6 @@
 		3098C46229A4ECEB005BB38B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		3098C46429A4ED00005BB38B /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		3098C46629A4ED19005BB38B /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
-		3098C46C29A4FF06005BB38B /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
-		3098C46D29A4FF06005BB38B /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		30B8D12C29827BA800F9A637 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		30B8D12E29827D5200F9A637 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		30B8D134298BF64700F9A637 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
@@ -148,6 +148,7 @@
 		3098C45329A4E203005BB38B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				302182C729B09A2C0024E8B8 /* AlertViewController.swift */,
 				3098C45429A4E232005BB38B /* AlertModel.swift */,
 				3098C45629A4E34A005BB38B /* Profile.swift */,
 				3098C45829A4E669005BB38B /* UserModel.swift */,
@@ -162,18 +163,16 @@
 				3098C46429A4ED00005BB38B /* ProfileService.swift */,
 				3098C46629A4ED19005BB38B /* ProfileImageService.swift */,
 			);
-			name = Profile;
-			path = ../Profile;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		3098C46B29A4FEE4005BB38B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				3098C46C29A4FF06005BB38B /* YS Display-Bold.ttf */,
-				3098C46D29A4FF06005BB38B /* YS Display-Medium.ttf */,
+				302182C529B0976A0024E8B8 /* YS Display-Bold.ttf */,
+				302182C629B0976A0024E8B8 /* YS Display-Medium.ttf */,
 			);
-			name = Fonts;
-			path = ../Fonts;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		30B8D12B29827B4900F9A637 /* Auth */ = {
@@ -322,8 +321,6 @@
 				30EBFA8729506C7700563AD4 /* LaunchScreen.storyboard in Resources */,
 				30EBFA8429506C7700563AD4 /* Assets.xcassets in Resources */,
 				30EBFA8229506C7300563AD4 /* Main.storyboard in Resources */,
-				3098C46E29A4FF06005BB38B /* YS Display-Bold.ttf in Resources */,
-				3098C46F29A4FF06005BB38B /* YS Display-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +342,7 @@
 				3098C46729A4ED19005BB38B /* ProfileImageService.swift in Sources */,
 				30B8D12D29827BA800F9A637 /* AuthViewController.swift in Sources */,
 				3024E002297E9A830016082B /* Constants.swift in Sources */,
+				302182C829B09A2C0024E8B8 /* AlertViewController.swift in Sources */,
 				3098C45529A4E232005BB38B /* AlertModel.swift in Sources */,
 				3098C46529A4ED00005BB38B /* ProfileService.swift in Sources */,
 				3098C46329A4ECEB005BB38B /* ProfileViewController.swift in Sources */,
