@@ -1,50 +1,45 @@
 import Foundation
 
 final class OAuth2Service {
-    
-    fileprivate let unsplashAuthorizeTokenURLString = "https://unsplash.com/oauth/token"
     private var lastCode: String?
-    private let session = URLSession.shared
     private var task: URLSessionTask?
-    
-    private enum NetworkError: Error {
-        case codeError
-    }
-    
-    func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
+    private let networkClient = NetworkRouting()
+
+    func fetchAuthToken(_ code: String, handler: @escaping (Result<String, Error>) -> Void) {
         assert(Thread.isMainThread)
-        if lastCode == code { return }
+        guard lastCode != code, let request = buildRequest(code: code)  else { return }
+
         task?.cancel()
         lastCode = code
-        
-        let request = makeRequest(code: code)
-        let task = self.session.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
+
+        task = networkClient.fetch(requestType: .urlRequest(urlRequest: request), withToken: false) {[weak self] (response: Result<OAuthTokenResponseBody, Error>) in
             guard let self = self else {return}
-            switch result {
-            case .success(let jsonData):
-                OAuth2TokenStorage().token = jsonData.accessToken
-                completion(.success(jsonData.accessToken))
-                self.task = nil
-            case .failure:
-                self.lastCode = nil
+            self.task = nil
+
+            switch response {
+            case .success(let data):
+                    handler(.success(data.accessToken))
+            case .failure(let error):
+                    self.lastCode = nil
+                    handler(.failure(error))
             }
         }
-        self.task = task
-        task.resume()
     }
-    
-    private func makeRequest(code: String) -> URLRequest {
-        var urlComponents = URLComponents(string: unsplashAuthorizeTokenURLString)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "code", value: code),
-            URLQueryItem(name: "grant_type", value: "authorization_code")
-        ]
-        guard let url = urlComponents.url else { fatalError("Failed to create URL") }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        return request
+
+    private func buildRequest(code: String) -> URLRequest? {
+        if var urlComponents = URLComponents(string: Constants.tokenURL) {
+            urlComponents.queryItems = [
+                URLQueryItem(name: "client_id", value: Constants.accessKey),
+                URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+               URLQueryItem(name: "code", value: code),
+                URLQueryItem(name: "client_secret", value: Constants.secretKey),
+               URLQueryItem(name: "grant_type", value: "authorization_code")
+             ]
+            var request = URLRequest(url: urlComponents.url!)
+            request.httpMethod = "POST"
+
+            return request
+        }
+        return nil
     }
 }

@@ -1,149 +1,120 @@
 import UIKit
 
 final class ImageListService {
+    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange");
     static let shared = ImageListService()
-    private init() {}
-    
-    static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
-    static var lastLoadedPage: Int?
-    
-    private enum HttpMethods: String {
-        case GET, POST, DELETE
-    }
-    
-    private let urlSession = URLSession.shared
-    
+
+    private (set) var photos: [Photo] = []
     private var task: URLSessionTask?
-    private(set) var photos: [Photo] = []
-    
-    func fetchPhotosNextPage() {
-        assert(Thread.isMainThread)
-        task?.cancel()
-        
-        var nextPage: Int
-        
-        if let lastLoadedPage = ImageListService.lastLoadedPage {
-            nextPage = lastLoadedPage + 1
-            ImageListService.lastLoadedPage = nextPage
-        } else {
-            nextPage = 1
-            ImageListService.lastLoadedPage = nextPage
-        }
-        
-        guard let token = OAuth2TokenStorage().token else { return }
-        let request = imageListRequest(numberPage: nextPage, token: token)
-        
-        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<[PhotoResult], Error>) in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let photoResult):
-                    photoResult.forEach { result in
-                        let photo = self.getPhoto(from: result)
-                        
-                        if !self.photos.contains(photo) {
-                            self.photos.append(photo)
-                        }
-                    }
-                    NotificationCenter.default.post(
-                        name: ImageListService.didChangeNotification,
-                        object: self,
-                        userInfo: ["photos" : self.photos])
-                    self.task = nil
-                case .failure(let error):
-                    print(error)
-                    self.task = nil
-                }
-            }
-        }
-        
-        self.task = task
-        task.resume()
+    private let networkClient = NetworkRouting()
+
+    private let dateFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        return formatter
+    }()
+
+    private var lastLoadedPage: Int = 0
+
+    private func parsePhotoResult(from result: PhotoResult) -> Photo {
+        Photo(
+            id: result.id,
+            size: CGSize(width: result.width, height: result.height),
+            createdAt: dateFormatter.date(from: result.createdAt) ?? Date(),
+            welcomeDescription: result.description,
+            thumbImageURL: result.urls.thumb,
+            largeImageURL: result.urls.full,
+            isLiked: result.isLiked
+        )
     }
-    
-    private func imageListRequest(numberPage: Int, token: String) -> URLRequest {
-        var request = URLRequest.makeHTTPRequest(
-            path: "/photos" + "?page=\(numberPage)",
-            httpMethod: HttpMethods.GET.rawValue,
-            baseURL: Constants.defaultBaseURL)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        return request
-    }
-    
-    private func getPhoto(from result: PhotoResult) -> Photo {
-        let imageSize = CGSize(width: CGFloat(result.width), height: CGFloat(result.height))
-        
-        var createdDate: Date?
-        
-        if let dateString = result.createdAt {
-            createdDate = ISO8601DateFormatter().date(from: dateString)
-        } else {
-            createdDate = nil
-        }
-        
-        let photo = Photo(id: result.id,
-                          size: imageSize,
-                          createdAT: createdDate,
-                          welcomeDescription: result.description,
-                          thumbImageURL: result.urls.thumb,
-                          largeImageURL: result.urls.full,
-                          isLiked: result.likedByUser)
-        return photo
-    }
-    
 }
 
+
+//MARK: - FetchPhoto
 extension ImageListService {
-    func changeLIke(idPhoto: String, isLike: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
-        assert(Thread.isMainThread)
-        task?.cancel()
-        guard let token = OAuth2TokenStorage().token else { return }
-        
-        let httpMethod = isLike ? HttpMethods.POST.rawValue : HttpMethods.DELETE.rawValue
-        let request = likeRequest(id: idPhoto, httpMethod: httpMethod, token: token)
-        
-        let task = urlSession.dataTask(with: request) { [weak self] _, response, error in
-            if let error = error {
-                print(error)
-                completion(.failure(error))
-                return
-            }
-            guard
-                let response = response,
-                let statusCode = (response as? HTTPURLResponse)?.statusCode,
-                statusCode == 201 || statusCode == 200,
-                let self = self else { return }
-            
-            self.changePhoto(photoId: idPhoto)
-            completion(.success(Void()))
+    func fetchPhotosNextPage() {
+        if task != nil { return }
+        guard let url = getNextPhotosURL() else {
+            fatalError("Unable to build next photo URL")
         }
-        
-        self.task = task
-        task.resume()
+
+        task = networkClient.fetch(requestType: .url(url: url)) { [weak self] (result: Result<[PhotoResult], Error>) in
+            guard let self = self else { return }
+            switch result {
+                case .success(let photos):
+                    self.updateLastLoadPage()
+                    self.preparePhotoResult(data: photos)
+                case .failure(let error):
+                    print(error)
+            }
+            self.task = nil
+        }
     }
-    
-    private func likeRequest(id: String, httpMethod: String, token: String) -> URLRequest {
-        var request = URLRequest.makeHTTPRequest(
-            path: "/photos" + "/\(id)/like",
-            httpMethod: httpMethod,
-            baseURL: Constants.defaultBaseURL)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        return request
+
+    private func getNextPhotosURL() -> URL? {
+        guard let url = URL(string: Constants.photoUrl) else { return nil }
+
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let nextPage = lastLoadedPage + 1
+
+        let queryItems = [URLQueryItem(name: "page", value:  "\(nextPage)"),
+                          URLQueryItem(name: "per_page", value: "10")]
+
+        urlComponents?.queryItems = queryItems
+
+        return urlComponents?.url
     }
-    
-    private func changePhoto(photoId: String) {
-        if let index = self.photos.firstIndex(where: { $0.id == photoId}) {
-            let photo = self.photos[index]
-            let newPhoto = Photo(id: photo.id,
-                                 size: photo.size,
-                                 createdAt:,
-                                 welcomeDescription: photo.welcomeDescription,
-                                 thumbImageURL: photo.thumbImageURL,
-                                 largeImageURL: photo.largeImageURL,
-                                 isLiked: !photo.isLiked
+
+    private func preparePhotoResult(data: [PhotoResult]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.photos.append(contentsOf: data.map {item in self.parsePhotoResult(from: item)})
+        }
+
+
+        NotificationCenter.default
+            .post(
+                name: ImageListService.didChangeNotification,
+                object: self
             )
-            
-            self.photos[index] = newPhoto
+    }
+
+    private func updateLastLoadPage() {
+        lastLoadedPage = lastLoadedPage + 1
+    }
+}
+
+
+//MARK: - LikesService
+extension ImageListService {
+    enum LikeServiceError: Error {
+      case raceCondition
+    }
+
+    func changeLike(photoId: String, shouldLike: Bool, photoIdx: Int, _ completion: @escaping (Result<Photo, Error>) -> Void) {
+        if task != nil {
+            // Just to log cases like this
+            completion(.failure(LikeServiceError.raceCondition))
+            return
+        }
+
+        guard let url = URL(string: "\(Constants.photoUrl)/\(photoId)/like") else {
+            fatalError("Empty url")
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = shouldLike ? "POST" : "DELETE"
+
+        task = networkClient.fetch(requestType: .urlRequest(urlRequest: request)) { [weak self] (result: Result<LikePhotoResult, Error>) in
+            guard let self = self else { return }
+            switch result {
+                case .success(let likePhotoResult):
+                    self.photos[photoIdx].isLiked = likePhotoResult.photo.isLiked
+                    completion(.success(self.parsePhotoResult(from: likePhotoResult.photo)))
+                case .failure(let error):
+                    completion(.failure(error))
+
+            }
+            self.task = nil
         }
     }
 }
