@@ -12,29 +12,40 @@ final class WebViewViewController: UIViewController {
     @IBOutlet private var progressView: UIProgressView!
     
     weak var delegate: WebViewViewControllerDelegate?
-    
-    private struct WebConstants {
-        static let authorizeURL = "https://unsplash.com/oauth/authorize"
-        static let code = "code"
-        static let authorizePath = "/oauth/authorize/native"
-    }
-    
     private var estimatedProgressObservation: NSKeyValueObservation?
     
+    @IBAction private func didTapBackButton(_ sender: Any?) {
+        delegate?.webViewViewControllerDidCancel(self)
+    }
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        webView.navigationDelegate = self
+        let oauthLink = getOauthLink()
+        let request = URLRequest(url: oauthLink)
+        webView.load(request)
+        updateProgress()
+    }
+    
+    private func getOauthLink() -> URL {
+        var urlComponents = URLComponents(string: Constants.authorizeURL)!
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: Constants.accessKey),
+            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: Constants.accessScope)
+        ]
+        return urlComponents.url!
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
              options: [],
              changeHandler: { [weak self] _, _ in
-                 guard let self = self else {return}
+                 guard let self = self else { return }
                  self.updateProgress()
              })
-    }
-    
-    @IBAction private func didTapBackButton(_ sender: Any?) {
-        delegate?.webViewViewControllerDidCancel(self)
     }
     
     private func updateProgress() {
@@ -44,43 +55,42 @@ final class WebViewViewController: UIViewController {
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let code = fetchCOde(for: navigationAction.request.url) {
+    private func code(from navigationAction: WKNavigationAction) -> String? {
+        if
+            let url = navigationAction.request.url,
+            let urlComponents = URLComponents(string: url.absoluteString),
+            urlComponents.path == Constants.nativePath,
+            let items = urlComponents.queryItems,
+            let codeItem = items.first(where: { $0.name == "code" })
+        {
+            return codeItem.value
+        }
+        return nil
+    }
+    
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        if let code = code(from: navigationAction) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }
     }
-}
-
-extension WebViewViewController {
-    func authorizeRequest() -> URLRequest? {
-        var urlComponents = URLComponents(string: WebConstants.authorizeURL)
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: WebConstants.code),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-        if let url = urlComponents?.url {
-            return URLRequest(url: url)
-        }
-        return nil
-    }
     
-    func fetchCOde(for url: URL?) -> String? {
-        if let url = url,
-           let urlComponents = URLComponents(string: url.absoluteString),
-           urlComponents.path == WebConstants.authorizePath,
-           let codeItem = urlComponents.queryItems?.first(where: { $0.name == WebConstants.code}) {
-            return codeItem.value
+    static func clean() {
+        // Очищаем все куки из хранилища
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        // Запрашиваем все данные из локального хранилища
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            // Массив полученных записей удаляем из хранилища
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
         }
-        return nil
     }
 }
-
-
 
