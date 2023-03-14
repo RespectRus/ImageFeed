@@ -92,7 +92,6 @@ extension ImageListService {
 
     func changeLike(photoId: String, shouldLike: Bool, photoIdx: Int, _ completion: @escaping (Result<Photo, Error>) -> Void) {
         if task != nil {
-            // Just to log cases like this
             completion(.failure(LikeServiceError.raceCondition))
             return
         }

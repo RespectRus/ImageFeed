@@ -120,7 +120,7 @@ extension SingleImageViewController {
         }
 
         let retryAction = UIAlertAction(
-            title: "Попробовать еше раз?",
+            title: "Повторить",
             style: .default
         ) { [weak self] _ in
             guard let self = self else { return }
