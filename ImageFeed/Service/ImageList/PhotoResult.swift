@@ -14,15 +14,13 @@ struct PhotoResult: Decodable  {
         let small: URL
         let thumb: URL
     }
-
-
+    
     enum CodingKeys: String, CodingKey {
         case id, width, height, description, urls
         case isLiked = "liked_by_user"
         case createdAt = "created_at"
     }
 }
-
 
 struct LikePhotoResult: Decodable {
     let photo: PhotoResult

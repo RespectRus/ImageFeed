@@ -32,7 +32,6 @@ final class ImagesListCell: UITableViewCell {
         setIsLiked(isLiked: photo.isLiked)
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         // отменяем загрузку, чтобы избежать багов при переиспользовании ячеек

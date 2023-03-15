@@ -47,7 +47,6 @@ extension ImagesListViewController: UITableViewDataSource {
         if indexPath.row == photos.count - 1 {
             imageListService.fetchPhotosNextPage()
         }
-        
     }
 }
 

@@ -49,10 +49,8 @@ final class NetworkRouting: NetworkClient {
                 forHTTPHeaderField: "Authorization"
             )
         }
-        
         return request
     }
-    
     
     func fetch<Model>(
         requestType: RequestType,
@@ -87,9 +85,7 @@ final class NetworkRouting: NetworkClient {
             } catch let error {
                 print(error)
                 handler(.failure(error))
-                
             }
-            
         }
         task.resume()
         return task

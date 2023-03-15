@@ -6,7 +6,6 @@ final class ProfileViewController: UIViewController {
     private var profileImageServiceObserver: NSObjectProtocol?
     private var animationLayers = Set<CALayer>()
     
-    
     private let userProfileImage: UIImageView = {
         let imageView = UIImageView(image: UIImage.asset(ImageAsset.userPick))
         
@@ -52,8 +51,6 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutComponents()
@@ -63,8 +60,6 @@ final class ProfileViewController: UIViewController {
     }
 }
 
-
-// MARK: - Notification
 extension ProfileViewController {
     private func observeAvatarChanges() {
         profileImageServiceObserver = NotificationCenter.default
@@ -94,7 +89,6 @@ extension ProfileViewController {
     }
 }
 
-//MARK: - LogoutAction
 extension ProfileViewController {
     private func prepareAction() {
         logoutButton.addTarget(
@@ -113,7 +107,6 @@ extension ProfileViewController {
     }
 }
 
-
 extension ProfileViewController {
     private func layoutComponents() {
         view.backgroundColor = UIColor(named: "YP Black (iOS)")
@@ -126,7 +119,6 @@ extension ProfileViewController {
         vStack.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(vStack)
-        
         
         let hStack = UIStackView()
         
@@ -145,9 +137,6 @@ extension ProfileViewController {
         vStack.addArrangedSubview(loginNameLabel)
         vStack.addArrangedSubview(descriptionLabel)
         
-        
-        
-        
         NSLayoutConstraint.activate([
             vStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             vStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -159,7 +148,6 @@ extension ProfileViewController {
     }
 }
 
-// MARK: - Update Profile data
 extension ProfileViewController {
     
     private func updateProfileDetails(profile: Profile?) {
