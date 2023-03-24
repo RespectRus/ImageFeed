@@ -1,10 +1,19 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol { get set }
+    func updateAvatar()
+    func logout()
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+    
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
-    private var animationLayers = Set<CALayer>()
+    lazy var presenter: ProfileViewPresenterProtocol = {
+        return ProfileViewPresenter()
+    }()
     
     private let userProfileImage: UIImageView = {
         let imageView = UIImageView(image: UIImage.asset(ImageAsset.userPick))
@@ -55,26 +64,14 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         layoutComponents()
         prepareAction()
-        observeAvatarChanges()
+        presenter.view = self
+        presenter.viewDidLoad()
         updateProfileDetails(profile: profileService.profile)
     }
 }
 
 extension ProfileViewController {
-    private func observeAvatarChanges() {
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.DidChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-        updateAvatar()
-    }
-    
-    private func updateAvatar() {
+    internal func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
@@ -98,13 +95,19 @@ extension ProfileViewController {
         )
     }
     
-    @objc private func logoutPressed() {
-        OAuth2TokenStorage().clearToken()
-        WebViewViewController.clean()
-        tabBarController?.dismiss(animated: true)
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        window.rootViewController = SplashViewController()
-    }
+    func logout() {
+       OAuth2TokenStorage().clearToken()
+       WebViewViewController.clean()
+       tabBarController?.dismiss(animated: true)
+       guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+       window.rootViewController = SplashViewController()
+   }
+
+   @objc private func logoutPressed() {
+       
+       let alert = presenter.makeAlert()
+       present(alert, animated: true)
+   }
 }
 
 extension ProfileViewController {
