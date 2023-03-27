@@ -6,7 +6,7 @@ protocol ImagesListViewControllerProtocol: AnyObject {
 }
 
 final class ImagesListViewController: UIViewController {
-    private let singleViewIdentifier = "ShowSingleView"
+    private let singleViewIdentifier = "ShowSingleImageView"
     private let imageListService = ImageListService.shared
     private var imageListServiceObserver: NSObjectProtocol?
     private var photos: [Photo] = []
@@ -48,11 +48,7 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
-extension ImagesListViewController: UITableViewDataSource, ImagesListViewControllerProtocol {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
-    }
-
+extension ImagesListViewController: ImagesListViewControllerProtocol {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
 
@@ -62,6 +58,12 @@ extension ImagesListViewController: UITableViewDataSource, ImagesListViewControl
         imageListCell.delegate = self
         imageListCell.configure(from: photos[indexPath.row])
         return imageListCell
+    }
+}
+
+extension ImagesListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return photos.count
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

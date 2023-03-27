@@ -9,7 +9,7 @@ final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol {
         viewDidLoadCalled = true
     }
     
-    func makeAlert() -> UIAlertController {
+    func makeLogoutAlertModel() -> UIAlertController {
         UIAlertController()
     }
 }

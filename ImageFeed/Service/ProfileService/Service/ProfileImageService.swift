@@ -5,7 +5,7 @@ final class ProfileImageService {
     private(set) var avatarURL: String?
     private var task: URLSessionTask?
     static let shared = ProfileImageService()
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     private let networkClient = NetworkRouting()
     private init() {}
     
@@ -24,7 +24,7 @@ final class ProfileImageService {
                     self.avatarURL = image
                     NotificationCenter.default
                         .post(
-                            name: ProfileImageService.DidChangeNotification,
+                            name: ProfileImageService.didChangeNotification,
                             object: self,
                             userInfo: ["URL": image]
                         )

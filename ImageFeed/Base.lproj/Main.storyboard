@@ -246,7 +246,7 @@
                     <navigationItem key="navigationItem" id="fQc-OB-Bf5"/>
                     <connections>
                         <outlet property="tableView" destination="bwE-AD-SFz" id="Ytv-Bi-jpJ"/>
-                        <segue destination="N0E-Ts-M8d" kind="presentation" identifier="ShowSingleImage" id="Hct-VY-pMe"/>
+                        <segue destination="N0E-Ts-M8d" kind="presentation" identifier="ShowSingleImageView" id="Hct-VY-pMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
