@@ -1,31 +1,43 @@
 import XCTest
 @testable import ImageFeed
 
-final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol {
-    var view: ProfileViewControllerProtocol?
-    var viewDidLoadCalled = false
-    
-    func viewDidLoad() {
-        viewDidLoadCalled = true
-    }
-    
-    func makeLogoutAlertModel() -> UIAlertController {
-        UIAlertController()
-    }
-}
-
 final class ProfileViewTests: XCTestCase {
-    func testViewControllerCallsViewDidLoad() {
-        //given
-        let viewController = ProfileViewController()
-        let presenter = ProfileViewPresenterSpy()
-        viewController.presenter = presenter
-        presenter.view = viewController
+    func testViewControllerCallsDidLoad() {
+        //Given
+        let sut = ProfileViewControllerSpy()
+        let presenter = ProfilePresenterSpy()
         
-        //when
-        _ = viewController.view
+        guard let view = sut.profileScreenView as? ProfileViewSpy else {
+            XCTFail()
+            return
+        }
         
-        //then
+        //When
+        view.presenter = presenter
+        view.presenter?.view = view
+        presenter.viewDidLoad()
+        
+        //Then
         XCTAssertTrue(presenter.viewDidLoadCalled)
+    }
+    
+    func testProfileViewCallsUpdateProfile() {
+        //Given
+        let sut = ProfileViewControllerSpy()
+        let helper = ProfileHelper()
+        let presenter = ProfilePresenter(helper: helper)
+        
+        guard let view = sut.profileScreenView as? ProfileViewSpy else {
+            XCTFail()
+            return
+        }
+        
+        //When
+        view.presenter = presenter
+        view.presenter?.view = view
+        presenter.viewDidLoad()
+        
+        //Then
+        XCTAssertTrue(view.updateProfileCalled)
     }
 }

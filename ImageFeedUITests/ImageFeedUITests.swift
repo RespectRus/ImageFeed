@@ -29,7 +29,7 @@ final class ImageFeedUITests: XCTestCase {
             XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
             
             passwordTextField.tap()
-            passwordTextField.typeText("<password>")
+            passwordTextField.typeText("<password")
             webView.swipeUp()
             
             webView.buttons["Login"].tap()
@@ -51,11 +51,11 @@ final class ImageFeedUITests: XCTestCase {
         
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         
-        cellToLike.buttons["no active like button"].tap()
+        cellToLike.buttons["Like button"].tap()
         
         sleep(2)
         
-        cellToLike.buttons["active like button"].tap()
+        cellToLike.buttons["Like button"].tap()
         
         sleep(2)
         
@@ -78,8 +78,8 @@ final class ImageFeedUITests: XCTestCase {
         sleep(3)
         app.tabBars.buttons.element(boundBy: 1).tap()
         
-        XCTAssertTrue(app.staticTexts["FirstName_LastName"].exists)
-        XCTAssertTrue(app.staticTexts["@userName"].exists)
+        XCTAssertTrue(app.staticTexts["<Name>"].exists)
+        XCTAssertTrue(app.staticTexts["<login>"].exists)
         
         app.buttons["exit profile button"].tap()
         

@@ -70,6 +70,9 @@
 		30C7E8F929D1C90400E65FF7 /* LoadImageErrorAlertProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C7E8F829D1C90400E65FF7 /* LoadImageErrorAlertProtocol.swift */; };
 		30C7E8FB29D1C91B00E65FF7 /* AuthErrorAlertPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C7E8FA29D1C91B00E65FF7 /* AuthErrorAlertPresenterDelegate.swift */; };
 		30C7E8FD29D1CA8200E65FF7 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C7E8FC29D1CA8200E65FF7 /* UIViewController+extension.swift */; };
+		30C7E90529D4551200E65FF7 /* ProfilePresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C7E90429D4551200E65FF7 /* ProfilePresenterSpy.swift */; };
+		30C7E90729D4553900E65FF7 /* ProfileViewSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C7E90629D4553900E65FF7 /* ProfileViewSpy.swift */; };
+		30C7E90929D4555000E65FF7 /* ProfileViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C7E90829D4555000E65FF7 /* ProfileViewControllerSpy.swift */; };
 		30EBFA7B29506C7300563AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EBFA7A29506C7300563AD4 /* AppDelegate.swift */; };
 		30EBFA7D29506C7300563AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EBFA7C29506C7300563AD4 /* SceneDelegate.swift */; };
 		30EBFA7F29506C7300563AD4 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EBFA7E29506C7300563AD4 /* ImagesListViewController.swift */; };
@@ -160,6 +163,9 @@
 		30C7E8F829D1C90400E65FF7 /* LoadImageErrorAlertProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImageErrorAlertProtocol.swift; sourceTree = "<group>"; };
 		30C7E8FA29D1C91B00E65FF7 /* AuthErrorAlertPresenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorAlertPresenterDelegate.swift; sourceTree = "<group>"; };
 		30C7E8FC29D1CA8200E65FF7 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
+		30C7E90429D4551200E65FF7 /* ProfilePresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenterSpy.swift; sourceTree = "<group>"; };
+		30C7E90629D4553900E65FF7 /* ProfileViewSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewSpy.swift; sourceTree = "<group>"; };
+		30C7E90829D4555000E65FF7 /* ProfileViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerSpy.swift; sourceTree = "<group>"; };
 		30EBFA7729506C7300563AD4 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30EBFA7A29506C7300563AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30EBFA7C29506C7300563AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -248,6 +254,9 @@
 			isa = PBXGroup;
 			children = (
 				30349D3229C9F40E00AEB0D4 /* ProfileViewTests.swift */,
+				30C7E90429D4551200E65FF7 /* ProfilePresenterSpy.swift */,
+				30C7E90629D4553900E65FF7 /* ProfileViewSpy.swift */,
+				30C7E90829D4555000E65FF7 /* ProfileViewControllerSpy.swift */,
 			);
 			path = ProfileViewTest;
 			sourceTree = "<group>";
@@ -638,7 +647,10 @@
 				30349D2429C9D9CB00AEB0D4 /* WebViewTests.swift in Sources */,
 				30349D3129C9F3F600AEB0D4 /* ImageListViewTests.swift in Sources */,
 				30349D3329C9F40E00AEB0D4 /* ProfileViewTests.swift in Sources */,
+				30C7E90529D4551200E65FF7 /* ProfilePresenterSpy.swift in Sources */,
 				30349D2629C9DB9500AEB0D4 /* WebViewPresenterSpy.swift in Sources */,
+				30C7E90729D4553900E65FF7 /* ProfileViewSpy.swift in Sources */,
+				30C7E90929D4555000E65FF7 /* ProfileViewControllerSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
