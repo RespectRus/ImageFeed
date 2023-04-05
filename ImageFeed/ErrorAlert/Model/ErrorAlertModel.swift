@@ -1,8 +1,8 @@
 import UIKit
 
-struct AlertModel {
+struct ErrorAlertModel {
     let title: String
     let message: String
     let buttonText: String
-    var complection: () -> Void
+    let completion: ((UIAlertAction) -> Void)?
 }

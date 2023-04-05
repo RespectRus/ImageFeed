@@ -1,9 +1,3 @@
-//
-//  Image_FeedTests.swift
-//  Image FeedTests
-//
-//  Created by Respect on 02.03.2023.
-//
 @testable import ImageFeed
 
 import XCTest

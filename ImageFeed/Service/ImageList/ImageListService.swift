@@ -26,6 +26,10 @@ final class ImageListService {
             isLiked: result.isLiked
         )
     }
+    
+    func cleanPhotos() {
+        photos = []
+    }
 }
 
 extension ImageListService {

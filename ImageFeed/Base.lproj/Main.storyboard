@@ -21,6 +21,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4Q-Pz-QUV">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White (iOS)"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="H4C-mt-l8k"/>
                                 </constraints>
@@ -66,7 +67,7 @@
         <!--Web View View Controller-->
         <scene sceneID="03I-LY-x2t">
             <objects>
-                <viewController id="Htz-I9-VGz" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" id="Htz-I9-VGz" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wP6-VK-3JM">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -177,12 +178,13 @@
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZC-PW-H3r" userLabel="likeButton">
                                                     <rect key="frame" x="335" y="4" width="42" height="42"/>
+                                                    <accessibility key="accessibilityConfiguration" identifier="Like button"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="42" id="Z8C-CI-rdX"/>
                                                         <constraint firstAttribute="height" constant="42" id="xce-Y9-3OB"/>
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="active_like_button"/>
+                                                    <state key="normal" image="active like button"/>
                                                     <connections>
                                                         <action selector="likeButtonClicked" destination="R0M-ZL-orY" eventType="touchUpInside" id="wNU-jv-x3A"/>
                                                     </connections>
@@ -245,12 +247,12 @@
                     <navigationItem key="navigationItem" id="fQc-OB-Bf5"/>
                     <connections>
                         <outlet property="tableView" destination="bwE-AD-SFz" id="Ytv-Bi-jpJ"/>
-                        <segue destination="N0E-Ts-M8d" kind="presentation" identifier="ShowSingleImage" id="Hct-VY-pMe"/>
+                        <segue destination="N0E-Ts-M8d" kind="presentation" identifier="ShowSingleImageView" id="Hct-VY-pMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="563" y="-475"/>
+            <point key="canvasLocation" x="562.59541984732823" y="-475.35211267605638"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="dO0-mv-41S">
@@ -384,7 +386,7 @@
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="Logo_Authorization_YP" width="60" height="60"/>
-        <image name="active_like_button" width="30" height="26"/>
+        <image name="active like button" width="30" height="26"/>
         <image name="nav_back_black_button" width="9" height="16"/>
         <image name="nav_back_white_button" width="9" height="16"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
