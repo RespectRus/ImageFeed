@@ -2,7 +2,6 @@ import Foundation
 @testable import ImageFeed
 
 final class ProfilePresenterSpy: ProfilePresenterProtocol {
-    
     var profileImageServiceObserver: NSObjectProtocol?
     var view: ImageFeed.ProfileViewProtocol?
     

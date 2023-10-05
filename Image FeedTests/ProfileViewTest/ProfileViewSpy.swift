@@ -2,7 +2,6 @@ import UIKit
 @testable import ImageFeed
 
 final class ProfileViewSpy: ProfileViewProtocol {
-    
     var presenter: ImageFeed.ProfilePresenterProtocol?
     
     var updateProfileCalled = false

@@ -3,8 +3,6 @@
 import XCTest
 
 final class ImagesListServiceTests: XCTestCase {
-    
-    
     func testExample() throws {
         let service = ImageListService()
         
